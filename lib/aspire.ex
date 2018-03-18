@@ -22,48 +22,48 @@ defmodule Aspire do
 
   ## Examples
 
-      ```
-      iex> Aspire.to_string(:hello)
-      "hello"
-      iex> Aspire.to_string(MyApp.Mymodule)
-      "Elixir.MyApp.Mymodule"
-      iex> Aspire.to_string(nil)
-      "nil"
-      iex> Aspire.to_string(:undefined)
-      "undefined"
-      iex> Aspire.to_string(false)
-      "false"
+    ```
+    iex> Aspire.to_string(:hello)
+    "hello"
+    iex> Aspire.to_string(MyApp.Mymodule)
+    "Elixir.MyApp.Mymodule"
+    iex> Aspire.to_string(nil)
+    "nil"
+    iex> Aspire.to_string(:undefined)
+    "undefined"
+    iex> Aspire.to_string(false)
+    "false"
 
-      iex> Aspire.to_string(0)
-      "0"
-      iex> Aspire.to_string(123)
-      "123"
-      iex> Aspire.to_string(-123)
-      "-123"
+    iex> Aspire.to_string(0)
+    "0"
+    iex> Aspire.to_string(123)
+    "123"
+    iex> Aspire.to_string(-123)
+    "-123"
 
-      iex> Aspire.to_string(0.00000, %Aspire{decimals: 8})
-      "0.0"
-      iex> Aspire.to_string(1.230000, %Aspire{decimals: 8})
-      "1.23"
-      iex> Aspire.to_string(1.230000, %Aspire{decimals: 8, compact: false})
-      "1.23000000"
-      iex> Aspire.to_string(1.23e5, %Aspire{decimals: 8})
-      "123000.0"
-      iex> Aspire.to_string(1.23)
-      1.23
+    iex> Aspire.to_string(0.00000, %Aspire{decimals: 8})
+    "0.0"
+    iex> Aspire.to_string(1.230000, %Aspire{decimals: 8})
+    "1.23"
+    iex> Aspire.to_string(1.230000, %Aspire{decimals: 8, compact: false})
+    "1.23000000"
+    iex> Aspire.to_string(1.23e5, %Aspire{decimals: 8})
+    "123000.0"
+    iex> Aspire.to_string(1.23)
+    1.23
 
-      iex> Aspire.to_string('hello world')
-      "hello world"
-      iex> Aspire.to_string([])
-      ""
-      iex> Aspire.to_string([12345, 12345, 12345])
-      [12345, 12345, 12345]
-      iex> Aspire.to_string([hello: "world"])
-      [hello: "world"]
+    iex> Aspire.to_string('hello world')
+    "hello world"
+    iex> Aspire.to_string([])
+    ""
+    iex> Aspire.to_string([12345, 12345, 12345])
+    [12345, 12345, 12345]
+    iex> Aspire.to_string([hello: "world"])
+    [hello: "world"]
 
-      iex> Aspire.to_string(%{hello: "world"})
-      %{hello: "world"}
-      ```
+    iex> Aspire.to_string(%{hello: "world"})
+    %{hello: "world"}
+    ```
 
   """
 
@@ -116,80 +116,80 @@ defmodule Aspire do
 
   ## Examples
 
-      ```
-      iex> Aspire.to_integer("0")
-      0
-      iex> Aspire.to_integer("123")
-      123
-      iex> Aspire.to_integer("-123")
-      -123
+    ```
+    iex> Aspire.to_integer("0")
+    0
+    iex> Aspire.to_integer("123")
+    123
+    iex> Aspire.to_integer("-123")
+    -123
 
-      iex> Aspire.to_integer("0.0")
-      0
-      iex> Aspire.to_integer("123.0")
-      123
-      iex> Aspire.to_integer("-123.0")
-      -123
-      iex> Aspire.to_integer("123.1")
-      "123.1"
-      iex> Aspire.to_integer("hello")
-      "hello"
+    iex> Aspire.to_integer("0.0")
+    0
+    iex> Aspire.to_integer("123.0")
+    123
+    iex> Aspire.to_integer("-123.0")
+    -123
+    iex> Aspire.to_integer("123.1")
+    "123.1"
+    iex> Aspire.to_integer("hello")
+    "hello"
 
-      iex> Aspire.to_integer(0.0)
-      0
-      iex> Aspire.to_integer(123.0)
-      123
-      iex> Aspire.to_integer(-123.0)
-      -123
-      iex> Aspire.to_integer(123.1)
-      123.1
+    iex> Aspire.to_integer(0.0)
+    0
+    iex> Aspire.to_integer(123.0)
+    123
+    iex> Aspire.to_integer(-123.0)
+    -123
+    iex> Aspire.to_integer(123.1)
+    123.1
 
-      iex> Aspire.to_integer(:"0")
-      0
-      iex> Aspire.to_integer(:"123")
-      123
-      iex> Aspire.to_integer(:"-123")
-      -123
+    iex> Aspire.to_integer(:"0")
+    0
+    iex> Aspire.to_integer(:"123")
+    123
+    iex> Aspire.to_integer(:"-123")
+    -123
 
-      iex> Aspire.to_integer(:"0.0")
-      0
-      iex> Aspire.to_integer(:"123.0")
-      123
-      iex> Aspire.to_integer(:"-123.0")
-      -123
-      iex> Aspire.to_integer(:"123.1")
-      :"123.1"
-      iex> Aspire.to_integer(:hello)
-      :hello
-      iex> Aspire.to_integer(nil)
-      nil
+    iex> Aspire.to_integer(:"0.0")
+    0
+    iex> Aspire.to_integer(:"123.0")
+    123
+    iex> Aspire.to_integer(:"-123.0")
+    -123
+    iex> Aspire.to_integer(:"123.1")
+    :"123.1"
+    iex> Aspire.to_integer(:hello)
+    :hello
+    iex> Aspire.to_integer(nil)
+    nil
 
-      iex> Aspire.to_integer('0')
-      0
-      iex> Aspire.to_integer('123')
-      123
-      iex> Aspire.to_integer('-123')
-      -123
+    iex> Aspire.to_integer('0')
+    0
+    iex> Aspire.to_integer('123')
+    123
+    iex> Aspire.to_integer('-123')
+    -123
 
-      iex> Aspire.to_integer('0.0')
-      0
-      iex> Aspire.to_integer('123.0')
-      123
-      iex> Aspire.to_integer('-123.0')
-      -123
-      iex> Aspire.to_integer('123.1')
-      '123.1'
-      iex> Aspire.to_integer('hello')
-      'hello'
+    iex> Aspire.to_integer('0.0')
+    0
+    iex> Aspire.to_integer('123.0')
+    123
+    iex> Aspire.to_integer('-123.0')
+    -123
+    iex> Aspire.to_integer('123.1')
+    '123.1'
+    iex> Aspire.to_integer('hello')
+    'hello'
 
-      iex> Aspire.to_integer([])
-      []
-      iex> Aspire.to_integer([12345, 12345, 12345])
-      [12345, 12345, 12345]
+    iex> Aspire.to_integer([])
+    []
+    iex> Aspire.to_integer([12345, 12345, 12345])
+    [12345, 12345, 12345]
 
-      iex> Aspire.to_integer(%{hello: "world"})
-      %{hello: "world"}
-      ```
+    iex> Aspire.to_integer(%{hello: "world"})
+    %{hello: "world"}
+    ```
 
   """
 
@@ -415,26 +415,27 @@ defmodule Aspire do
 
   @doc """
 
-    Safe conversion to atom type.
+  Safe conversion to atom type.
 
-    ## Examples
+  ## Examples
 
-      ```
-      iex> Aspire.to_atom("erlang")
-      :erlang
-      iex> Aspire.to_atom("hello_world")
-      "hello_world"
+    ```
+    iex> Aspire.to_atom("erlang")
+    :erlang
+    iex> Aspire.to_atom("hello_world")
+    "hello_world"
 
-      iex> Aspire.to_atom('erlang')
-      :erlang
-      iex> Aspire.to_atom('hello_world')
-      'hello_world'
-      iex> Aspire.to_atom(123.123)
-      123.123
+    iex> Aspire.to_atom('erlang')
+    :erlang
+    iex> Aspire.to_atom('hello_world')
+    'hello_world'
+    iex> Aspire.to_atom(123.123)
+    123.123
 
-      iex> Aspire.to_atom(%{hello: "world"})
-      %{hello: "world"}
-      ```
+    iex> Aspire.to_atom(%{hello: "world"})
+    %{hello: "world"}
+    ```
+
   """
 
   def to_atom(some)
@@ -549,20 +550,21 @@ defmodule Aspire do
 
   @doc """
 
-    Safe conversion to list type.
+  Safe conversion to list type.
 
-    ## Examples
+  ## Examples
 
-      ```
-      iex> Aspire.to_list(%Aspire{decimals: 5}) |> Enum.sort
-      [compact: true, decimals: 5]
-      iex> Aspire.to_list(%{foo: 123, bar: 321}) |> Enum.sort
-      [bar: 321, foo: 123]
-      iex> Aspire.to_list("hello")
-      'hello'
-      iex> Aspire.to_list(123)
-      123
-      ```
+    ```
+    iex> Aspire.to_list(%Aspire{decimals: 5}) |> Enum.sort
+    [compact: true, decimals: 5]
+    iex> Aspire.to_list(%{foo: 123, bar: 321}) |> Enum.sort
+    [bar: 321, foo: 123]
+    iex> Aspire.to_list("hello")
+    'hello'
+    iex> Aspire.to_list(123)
+    123
+    ```
+
   """
 
   def to_list(some)
