@@ -460,4 +460,80 @@ defmodule Aspire do
 
   def to_atom(some), do: some
 
+  @doc """
+
+  Safe conversion to map type.
+
+  ## Examples
+
+    ```
+    iex> Aspire.to_map(%Aspire{decimals: 5})
+    %{decimals: 5, compact: true}
+    iex> Aspire.to_map([foo: 123, bar: 321])
+    %{foo: 123, bar: 321}
+    iex> Aspire.to_map([{"foo", 123}, {"bar", 321}])
+    [{"foo", 123}, {"bar", 321}]
+    iex> Aspire.to_map([123, 321])
+    [123, 321]
+    iex> Aspire.to_map("hello")
+    "hello"
+    ```
+
+  """
+
+  def to_map(struct = %_{}) do
+    struct
+    |> Map.from_struct
+    |> Map.delete(:__meta__)
+  end
+
+  def to_map(list) when is_list(list) do
+    list
+    |> Keyword.keyword?
+    |> case do
+      true -> Enum.reduce(list, %{}, fn({k, v}, acc = %{}) -> Map.put(acc, k, v) end)
+      false -> list
+    end
+  end
+
+  def to_map(some), do: some
+
+  @doc """
+
+  Safe conversion to boolean type.
+
+  ## Examples
+
+    ```
+    iex> Aspire.to_boolean(1)
+    true
+    iex> Aspire.to_boolean(0)
+    false
+    iex> Aspire.to_boolean(nil)
+    false
+    iex> Aspire.to_boolean(:undefined)
+    false
+    iex> Aspire.to_boolean("true")
+    true
+    iex> Aspire.to_boolean("false")
+    false
+
+    iex> Aspire.to_boolean(1.0)
+    1.0
+    iex> Aspire.to_boolean(2)
+    2
+    iex> Aspire.to_boolean("hello")
+    "hello"
+    ```
+
+  """
+
+  def to_boolean(1), do: true
+  def to_boolean(0), do: false
+  def to_boolean(nil), do: false
+  def to_boolean(:undefined), do: false
+  def to_boolean("true"), do: true
+  def to_boolean("false"), do: false
+  def to_boolean(some), do: some
+
 end
