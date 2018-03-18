@@ -536,4 +536,40 @@ defmodule Aspire do
   def to_boolean("false"), do: false
   def to_boolean(some), do: some
 
+  @doc """
+
+    Safe conversion to list type.
+
+    ## Examples
+
+      ```
+      iex> Aspire.to_list(%Aspire{decimals: 5}) |> Enum.sort
+      [compact: true, decimals: 5]
+      iex> Aspire.to_list(%{foo: 123, bar: 321}) |> Enum.sort
+      [bar: 321, foo: 123]
+      iex> Aspire.to_list("hello")
+      'hello'
+      iex> Aspire.to_list(123)
+      123
+      ```
+  """
+
+  def to_list(struct = %_{}) do
+    struct
+    |> __MODULE__.to_map
+    |> __MODULE__.to_list
+  end
+
+  def to_list(map = %{}) do
+    map
+    |> Map.to_list
+  end
+
+  def to_list(binary) when is_binary(binary) do
+    binary
+    |> String.to_charlist
+  end
+
+  def to_list(some), do: some
+
 end
