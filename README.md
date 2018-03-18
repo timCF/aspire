@@ -9,8 +9,7 @@ Else it returns first argument as is.
 ```elixir
 def deps do
   [
-    # other deps
-    ...
+    # other deps ...
     {:aspire, "~> 0.1.0"}
   ]
 end

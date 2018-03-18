@@ -1,0 +1,27 @@
+version: "3"
+
+services:
+  main:
+    image: "aspire:master"
+    ports:
+      - "6666:4369"
+      - "9100-9105:9100-9105"
+    environment:
+      MIX_ENV: staging
+      ERLANG_OTP_APPLICATION: "aspire"
+      ERLANG_HOST: "127.0.0.1"
+      ERLANG_MIN_PORT: 9100
+      ERLANG_MAX_PORT: 9105
+      ERLANG_MAX_PROCESSES: 1000000
+      ERLANG_COOKIE: "voUVnQxR92NPKD3G5/vYkjtCdQw/n0hAdaDcyfiMi1M="
+    networks:
+      - default
+    deploy:
+      resources:
+        limits:
+          memory: 4096M
+        reservations:
+          memory: 2048M
+      restart_policy:
+        condition: on-failure
+        delay: 5s

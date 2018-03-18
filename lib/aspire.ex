@@ -49,6 +49,8 @@ defmodule Aspire do
       "1.23000000"
       iex> Aspire.to_string(1.23e5, %Aspire{decimals: 8})
       "123000.0"
+      iex> Aspire.to_string(1.23)
+      1.23
 
       iex> Aspire.to_string('hello world')
       "hello world"
@@ -97,10 +99,11 @@ defmodule Aspire do
 
   def to_string(list, %__MODULE__{}) when is_list(list) do
     try do
-      :erlang.list_to_binary(list)
+      Aspire.Utils.list_to_binary(list)
     rescue
       _ -> list
     catch
+      _    -> list
       _, _ -> list
     end
   end
@@ -114,6 +117,78 @@ defmodule Aspire do
   ## Examples
 
       ```
+      iex> Aspire.to_integer("0")
+      0
+      iex> Aspire.to_integer("123")
+      123
+      iex> Aspire.to_integer("-123")
+      -123
+
+      iex> Aspire.to_integer("0.0")
+      0
+      iex> Aspire.to_integer("123.0")
+      123
+      iex> Aspire.to_integer("-123.0")
+      -123
+      iex> Aspire.to_integer("123.1")
+      "123.1"
+      iex> Aspire.to_integer("hello")
+      "hello"
+
+      iex> Aspire.to_integer(0.0)
+      0
+      iex> Aspire.to_integer(123.0)
+      123
+      iex> Aspire.to_integer(-123.0)
+      -123
+      iex> Aspire.to_integer(123.1)
+      123.1
+
+      iex> Aspire.to_integer(:"0")
+      0
+      iex> Aspire.to_integer(:"123")
+      123
+      iex> Aspire.to_integer(:"-123")
+      -123
+
+      iex> Aspire.to_integer(:"0.0")
+      0
+      iex> Aspire.to_integer(:"123.0")
+      123
+      iex> Aspire.to_integer(:"-123.0")
+      -123
+      iex> Aspire.to_integer(:"123.1")
+      :"123.1"
+      iex> Aspire.to_integer(:hello)
+      :hello
+      iex> Aspire.to_integer(nil)
+      nil
+
+      iex> Aspire.to_integer('0')
+      0
+      iex> Aspire.to_integer('123')
+      123
+      iex> Aspire.to_integer('-123')
+      -123
+
+      iex> Aspire.to_integer('0.0')
+      0
+      iex> Aspire.to_integer('123.0')
+      123
+      iex> Aspire.to_integer('-123.0')
+      -123
+      iex> Aspire.to_integer('123.1')
+      '123.1'
+      iex> Aspire.to_integer('hello')
+      'hello'
+
+      iex> Aspire.to_integer([])
+      []
+      iex> Aspire.to_integer([12345, 12345, 12345])
+      [12345, 12345, 12345]
+
+      iex> Aspire.to_integer(%{hello: "world"})
+      %{hello: "world"}
       ```
 
   """
