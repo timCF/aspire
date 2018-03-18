@@ -67,7 +67,7 @@ defmodule Aspire do
 
   """
 
-  def to_string(some, params \\ %__MODULE__{})
+  def to_string(some, params \\ %Aspire{})
 
   def to_string(atom, %__MODULE__{}) when is_atom(atom) do
     atom
@@ -192,6 +192,8 @@ defmodule Aspire do
       ```
 
   """
+
+  def to_integer(some)
 
   def to_integer(binary) when is_binary(binary) do
     binary
@@ -336,6 +338,8 @@ defmodule Aspire do
 
   """
 
+  def to_float(some)
+
   def to_float(integer) when is_integer(integer) do
     integer / 1
   end
@@ -400,6 +404,8 @@ defmodule Aspire do
 
   """
 
+  def to_number(some)
+
   def to_number(some) do
     case to_integer(some) do
       integer when is_integer(integer) -> integer
@@ -430,6 +436,8 @@ defmodule Aspire do
       %{hello: "world"}
       ```
   """
+
+  def to_atom(some)
 
   def to_atom(binary) when is_binary(binary) do
     try do
@@ -481,6 +489,8 @@ defmodule Aspire do
 
   """
 
+  def to_map(some)
+
   def to_map(struct = %_{}) do
     struct
     |> Map.from_struct
@@ -528,6 +538,7 @@ defmodule Aspire do
 
   """
 
+  def to_boolean(some)
   def to_boolean(1), do: true
   def to_boolean(0), do: false
   def to_boolean(nil), do: false
@@ -553,6 +564,8 @@ defmodule Aspire do
       123
       ```
   """
+
+  def to_list(some)
 
   def to_list(struct = %_{}) do
     struct
