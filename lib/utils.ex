@@ -23,4 +23,20 @@ defmodule Aspire.Utils do
     :erlang.list_to_binary(some)
   end
 
+  @doc """
+
+  Wrapper around standard &String.to_existing_atom/1
+
+  ## Examples
+
+    ```
+    iex> Aspire.Utils.string_to_existing_atom("erlang")
+    :erlang
+    ```
+  """
+
+  def string_to_existing_atom(binary) do
+    String.to_existing_atom(binary)
+  end
+
 end

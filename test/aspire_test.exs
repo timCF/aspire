@@ -12,4 +12,13 @@ defmodule AspireTest do
     end
   end
 
+  test "to_atom can catch exceptions from String.to_existing_atom" do
+    with_mock Aspire.Utils, [:passthrough], [string_to_existing_atom: fn(_) -> throw("hello") end] do
+      assert "hello_world" == Aspire.to_atom("hello_world")
+    end
+    with_mock Aspire.Utils, [:passthrough], [string_to_existing_atom: fn(_) -> exit(:kill) end] do
+      assert "hello_world" == Aspire.to_atom("hello_world")
+    end
+  end
+
 end

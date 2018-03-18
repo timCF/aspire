@@ -201,16 +201,16 @@ defmodule Aspire do
         integer
       _ ->
         binary
-        |> Float.parse
+        |> __MODULE__.to_float
         |> case do
-          {float, ""} ->
+          float when is_float(float) ->
             float
             |> __MODULE__.to_integer
             |> case do
               integer when is_integer(integer) -> integer
-              _ -> binary
+              ^float -> binary
             end
-          _ ->
+          ^binary ->
             binary
          end
     end
@@ -246,11 +246,218 @@ defmodule Aspire do
         |> to_integer
         |> case do
           integer when is_integer(integer) -> integer
-          _ -> list
+          ^binary -> list
         end
     end
   end
 
   def to_integer(some), do: some
+
+  @doc """
+
+  Safe conversion to float type.
+
+  ## Examples
+
+    ```
+    iex> Aspire.to_float(0)
+    0.0
+    iex> Aspire.to_float(123)
+    123.0
+    iex> Aspire.to_float(-123)
+    -123.0
+
+    iex> Aspire.to_float("0")
+    0.0
+    iex> Aspire.to_float("123")
+    123.0
+    iex> Aspire.to_float("-123")
+    -123.0
+    iex> Aspire.to_float("123.123")
+    123.123
+    iex> Aspire.to_float("-123.12300")
+    -123.123
+    iex> Aspire.to_float("hello")
+    "hello"
+    iex> Aspire.to_float("123.")
+    "123."
+    iex> Aspire.to_float(".123")
+    ".123"
+    iex> Aspire.to_float("123.1ww23")
+    "123.1ww23"
+
+    iex> Aspire.to_float(:"0")
+    0.0
+    iex> Aspire.to_float(:"123")
+    123.0
+    iex> Aspire.to_float(:"-123")
+    -123.0
+    iex> Aspire.to_float(:"123.123")
+    123.123
+    iex> Aspire.to_float(:"-123.12300")
+    -123.123
+    iex> Aspire.to_float(:hello)
+    :hello
+    iex> Aspire.to_float(:"123.")
+    :"123."
+    iex> Aspire.to_float(:".123")
+    :".123"
+    iex> Aspire.to_float(:"123.1ww23")
+    :"123.1ww23"
+    iex> Aspire.to_float(nil)
+    nil
+
+    iex> Aspire.to_float('0')
+    0.0
+    iex> Aspire.to_float('123')
+    123.0
+    iex> Aspire.to_float('-123')
+    -123.0
+    iex> Aspire.to_float('123.123')
+    123.123
+    iex> Aspire.to_float('-123.12300')
+    -123.123
+    iex> Aspire.to_float('hello')
+    'hello'
+    iex> Aspire.to_float('123.')
+    '123.'
+    iex> Aspire.to_float('.123')
+    '.123'
+    iex> Aspire.to_float('123.1ww23')
+    '123.1ww23'
+    iex> Aspire.to_float([])
+    []
+    iex> Aspire.to_float([12345, 12345])
+    [12345, 12345]
+
+    iex> Aspire.to_float(%{hello: "world"})
+    %{hello: "world"}
+    ```
+
+  """
+
+  def to_float(integer) when is_integer(integer) do
+    integer / 1
+  end
+
+  def to_float(binary) when is_binary(binary) do
+    binary
+    |> Float.parse
+    |> case do
+      {float, ""} -> float
+      _ -> binary
+    end
+  end
+
+  def to_float(atom) when is_atom(atom) do
+    atom
+    |> Atom.to_string
+    |> __MODULE__.to_float
+    |> case do
+      float when is_float(float) -> float
+      _ -> atom
+    end
+  end
+
+  def to_float(list) when is_list(list) do
+    list
+    |> __MODULE__.to_string
+    |> case do
+      list when is_list(list) ->
+        list
+      binary when is_binary(binary) ->
+        binary
+        |> __MODULE__.to_float
+        |> case do
+          float when is_float(float) -> float
+          ^binary -> list
+        end
+    end
+  end
+
+  def to_float(some), do: some
+
+  @doc """
+
+  Safe conversion to number type.
+
+  ## Examples
+
+    ```
+    iex> Aspire.to_number("0.0")
+    0
+    iex> Aspire.to_number("123.0")
+    123
+    iex> Aspire.to_number("-123.0")
+    -123
+    iex> Aspire.to_number("123.123")
+    123.123
+    iex> Aspire.to_number("-123.123")
+    -123.123
+    iex> Aspire.to_number("hello")
+    "hello"
+    ```
+
+  """
+
+  def to_number(some) do
+    case to_integer(some) do
+      integer when is_integer(integer) -> integer
+      ^some -> to_float(some)
+    end
+  end
+
+  @doc """
+
+    Safe conversion to atom type.
+
+    ## Examples
+
+      ```
+      iex> Aspire.to_atom("erlang")
+      :erlang
+      iex> Aspire.to_atom("hello_world")
+      "hello_world"
+
+      iex> Aspire.to_atom('erlang')
+      :erlang
+      iex> Aspire.to_atom('hello_world')
+      'hello_world'
+      iex> Aspire.to_atom(123.123)
+      123.123
+
+      iex> Aspire.to_atom(%{hello: "world"})
+      %{hello: "world"}
+      ```
+  """
+
+  def to_atom(binary) when is_binary(binary) do
+    try do
+      Aspire.Utils.string_to_existing_atom(binary)
+    rescue
+      _ -> binary
+    catch
+      _    -> binary
+      _, _ -> binary
+    end
+  end
+
+  def to_atom(some) when is_number(some) or is_list(some) do
+    some
+    |> __MODULE__.to_string
+    |> case do
+      ^some ->
+        some
+      binary when is_binary(binary) ->
+        binary
+        |> __MODULE__.to_atom
+        |> case do
+          atom when is_atom(atom) -> atom
+          ^binary -> some
+        end
+    end
+  end
+
+  def to_atom(some), do: some
 
 end
