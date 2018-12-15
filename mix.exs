@@ -12,7 +12,7 @@ defmodule Aspire.MixProject do
       # excoveralls
       test_coverage:      [tool: ExCoveralls],
       preferred_cli_env:  [
-        "coveralls":            :test,
+        coveralls:              :test,
         "coveralls.travis":     :test,
         "coveralls.circle":     :test,
         "coveralls.semaphore":  :test,
@@ -54,7 +54,7 @@ defmodule Aspire.MixProject do
       # development tools
       {:excoveralls, "~> 0.8",            only: [:dev, :test], runtime: false},
       {:dialyxir, "~> 0.5",               only: [:dev, :test], runtime: false},
-      {:ex_doc, "~> 0.18",                only: [:dev, :test], runtime: false},
+      {:ex_doc, "~> 0.19",                only: [:dev, :test], runtime: false},
       {:credo, "~> 0.8",                  only: [:dev, :test], runtime: false},
       {:boilex, "~> 0.1.6",               only: [:dev, :test], runtime: false},
       # test tools
